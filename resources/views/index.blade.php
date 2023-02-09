@@ -39,35 +39,47 @@
   </div>
   </center>
 
-  
-  <table class="table mt-5">
-    <thead class="bg-danger text-white fw-bold">
-    <th>Product ID</th>
-      <th>Product Name</th>
-      <th>Product Price</th>
-      <th>Product Image</th>
-      <th></th>
-    </thead>
-    <tbody class="text-danger bg-lite fs-4">
-      @foreach($data as $item)
-      <tr>
-        <form action="updatedelete" method="get"></form>
-        <td><input type="hidden" value="{{$item['id']}}">{{$item['id']}}</td>
-        <td><input type="hidden" value="{{$item['pName']}}">{{$item['pName']}}</td>
-        <td><input type="hidden" value="{{$item['pPrice']}}">{{$item['pPrice']}}</td>
-        <td><img src="uploads/{{$item['pImage']}}" height="100px" width="110px"></td>
-        <td class="mt-2 btn-group-vertical">
-          <a class="btn btn-sm btn-outline-success mt-2 " href="{{ route('product.edit', $item['id'])}}" value="Update">Edit</a>
-          <form action="{{ route('product.destroy', $item['id'])}}" method="delete">
-             <input type="submit" class="btn btn-sm btn-outline-danger mt-2 md-2" onclick="return confirm('Confirm Delete')" value="Delete">
-          </form>
-          
-        </td>
-        
-      </tr>
-      @endforeach
-    </tbody>
-  </table>
+<div class="container mt-5">
+    <div class="row">
+               @if(session()->has('msg'))
+                 <div class="alert alert-{{session('cls')}}">
+                                 {{session('msg')}}
+                 </div>
+               @endif
+             <table class="table mt-3">
+             <thead class="bg-danger text-white fw-bold">
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Product Price</th>
+                <th>Product Image</th>
+                <th></th>
+             </thead>
+             <tbody class="text-danger bg-lite fs-4">
+             @foreach($products as $product)
+              <tr>
+               <form action="updatedelete" method="get"></form>
+                 <td value="{{$product->id}}">{{$product->id}}</td>
+                 <td value="{{$product->pName}}">{{$product->pName}}</td>
+                 <td value="{{$product->pPrice}}">{{$product->pPrice}}</td>
+                 <td><img src="uploads/{{$product->pImage}}" height="100px" width="110px"></td>
+                 <td class="mt-2 btn-group-vertical">
+                 <a class="btn btn-sm btn-outline-success mt-2 " href="{{ route('product.edit', $product->id)}}" value="Update">Edit</a>
+                 <form action="{{ route('product.destroy', $product->id)}}" method="delete">
+                 <input type="submit" class="btn btn-sm btn-outline-danger mt-2 md-2" onclick="return confirm('Confirm Delete')" value="Delete">
+               </form>
+
+               </td>
+
+              </tr>
+             @endforeach
+             </tbody>
+             </table>
+                
+         
+      
+    </div>
+</div>
+ 
 
 
 

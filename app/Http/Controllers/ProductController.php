@@ -46,8 +46,8 @@ class ProductController extends Controller
     
 
     function readdata(){
-       $pdata = product::all();
-        return view('insertRead',['data'=>$pdata]);
+       $products = product::all();
+        return view('index',compact('products'));
     }
 
     function edit($id){
@@ -59,16 +59,18 @@ class ProductController extends Controller
 
     function update(Request $request, $id){
       $product = Product::find($id);
-      $input = $request->all();
-    //   dd($input); exit();
-      $product->update($input);
+      $product->update($request->all());
     //   return view('updateview','product');
-      return redirect('/')->with('flash_message','Student Updated.');
+    session()->flash('msg','Product Updated Successfully');
+    session()->flash('cls','success');
+      return redirect('/')->with('flash_message','Product Updated!');
     }
 
 
     function destroy($id){
         Product::destroy($id);
+        session()->flash('msg','Product Deleted Successfully');
+        session()->flash('cls','danger');
         return redirect('/')->with('flash_message','Product Deleted!');
     }
 
